@@ -2,3 +2,5 @@
 *.a
 /Makefile.local
 /enter.bash
+/release/
+/debug/
