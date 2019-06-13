@@ -12,7 +12,6 @@ extern struct metal_cpu *__metal_dt_cpu_0;
 
 void motion_handler (int id, void *data)
 {
-  // printf("Called.\n");
   struct metal_motion *m = data;
   metal_motion_sense(m);
 
@@ -23,14 +22,6 @@ void motion_handler (int id, void *data)
   }
 
   metal_motion_actuate(m);
-
-  // printf("Distance = %d, velocity = %d\n", m->sensor.frontDistance, m->sensor.velocity);
-
-  // static int called = 0;
-  // called++;
-  // if (called > 20) {
-  //   exit(0);
-  // }
 }
 
 int main (void)
@@ -75,32 +66,21 @@ int main (void)
     printf("Got motion.\n");
   }
   metal_motion_init(motion);
-  // printf("Initialized motion.\n");
 
   motion_intr = metal_motion_interrupt(motion);
   if (motion == NULL) {
     printf("Motion interrupt is null.\n");
     return 5;
-  } else {
-    // printf("Got motion interrupt.\n");
   }
 
   metal_interrupt_init(motion_intr);
-  // printf("Initialized motion interrupt.\n");
 
   motion_intr_id = metal_motion_get_interrupt_id(motion);
   motion_intr_id = 3;
-  // printf("Got motion interrupt id %d.\n", motion_intr_id);
-
-  // rc = metal_interrupt_register_handler(motion_intr, 0, motion_handler, motion);
-  // rc = metal_interrupt_register_handler(motion_intr, 1, motion_handler, motion);
-  // rc = metal_interrupt_register_handler(motion_intr, 2, motion_handler, motion);
   rc = metal_interrupt_register_handler(motion_intr, motion_intr_id, motion_handler, motion);
   if (rc < 0) {
     return rc;
-  } else {
-    // printf("Registered interrupt handler.\n");
-  }
+  } else
 
   printf("About to init.\n");
   metal_motion_init(motion);
@@ -109,7 +89,6 @@ int main (void)
   } else {
     printf("Enabled interrupt.\n");
   }
-
 
   while (1)
     ;
